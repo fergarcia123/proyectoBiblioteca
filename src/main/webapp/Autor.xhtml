@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Tabla Autors</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="Menu.xhtml">
+<ui:define name="content">
+
+        <h:form>
+
+            <p:commandButton value="Agregar Autor" actionListener="#{autorControl.eliminarAutor()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+
+        <h:form id="formListado" style="background: appworkspace;">
+            <p:dataTable  id="tablaAutors" paginator="true" paginatorPosition="bottom" rows="10" var="autor" value="#{autorControl.listaAutor}" emptyMessage="No existen clientes">
+                <p:column headerText="ID autor">
+                    <h:outputText value="#{autor.idAutor}" />
+                </p:column>
+                <p:column headerText="Autor">
+                    <h:outputText value="#{autor.nombreAutor}" />
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{autor.estado}" />
+                </p:column>
+
+                <p:column headerText="MODIFICAR" style="text-align: center;">
+                    <p:commandButton style="background:greenyellow;" icon="ui-icon-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{autorControl.autor}" value="#{autor}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ELIMINAR" style="text-align: center">
+                    <p:commandButton style="background:red;" icon="ui-icon-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                        <f:setPropertyActionListener target="#{autorControl.autor}" value="#{autor}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+        <h:form id="formAgregar">
+            <p:dialog id="dlgAgregar" header="Agregar Autor" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto; background: buttonface;">                                
+                    <p:outputLabel value="Autor:"/>
+                    <p:inputText value="#{autorControl.autor.nombreAutor}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{autorControl.autor.estado}"/>
+                  
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{autorControl.agregarAutor()}" update=":formListado:tablaAutors" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formModificar">
+            <p:dialog id="dlgModificar" header="Modificar Autor" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto;">                                
+                    <p:outputLabel value="Autor:"/>
+                    <p:inputText value="#{autorControl.autor.nombreAutor}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{autorControl.autor.estado}"/>
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{autorControl.modificarAutor()}" update=":formListado:tablaAutors" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Autor" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{autorControl.eliminarAutor()}" update=":formListado:tablaAutors" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+            </p:dialog>
+        </h:form>
+    
+</ui:define>
+        </ui:composition>
+    </h:body>
+</html>

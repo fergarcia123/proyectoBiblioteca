@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Tabla Categorias</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="Menu.xhtml">
+<ui:define name="content">
+
+        <h:form>
+
+            <p:commandButton value="Agregar Categoria" actionListener="#{categoriaControl.eliminarCategoria()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+
+        <h:form id="formListado" style="background: appworkspace;">
+            <p:dataTable  id="tablaCategorias" paginator="true" paginatorPosition="bottom" rows="10" var="categoria" value="#{categoriaControl.listaCategoria}" emptyMessage="No existen clientes">
+                <p:column headerText="ID categoria">
+                    <h:outputText value="#{categoria.idCategoria}" />
+                </p:column>
+                <p:column headerText="Categoria">
+                    <h:outputText value="#{categoria.categoria}" />
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{categoria.estado}" />
+                </p:column>
+
+                <p:column headerText="MODIFICAR" style="text-align: center;">
+                    <p:commandButton style="background:greenyellow;" icon="ui-icon-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{categoriaControl.categoria}" value="#{categoria}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ELIMINAR" style="text-align: center">
+                    <p:commandButton style="background:red;" icon="ui-icon-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                        <f:setPropertyActionListener target="#{categoriaControl.categoria}" value="#{categoria}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+        <h:form id="formAgregar">
+            <p:dialog id="dlgAgregar" header="Agregar Categoria" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto; background: buttonface;">                                
+                    <p:outputLabel value="Categoria:"/>
+                    <p:inputText value="#{categoriaControl.categoria.categoria}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{categoriaControl.categoria.estado}"/>
+                  
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{categoriaControl.agregarCategoria()}" update=":formListado:tablaCategorias" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formModificar">
+            <p:dialog id="dlgModificar" header="Modificar Categoria" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto;">                                
+                    <p:outputLabel value="Categoria:"/>
+                    <p:inputText value="#{categoriaControl.categoria.categoria}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{categoriaControl.categoria.estado}"/>
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{categoriaControl.modificarCategoria()}" update=":formListado:tablaCategorias" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Categoria" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{categoriaControl.eliminarCategoria()}" update=":formListado:tablaCategorias" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+            </p:dialog>
+        </h:form>
+</ui:define>
+        </ui:composition>
+    </h:body>
+</html>

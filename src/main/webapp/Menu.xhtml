@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="estilos.css"/>
+        <title>Proyecto</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <h:form>  
+
+                <p:menubar>
+                    <p:submenu label="Inicio" icon="ui-icon-document">
+                        <p:menuitem value="Inicio" url="index.xhtml" />
+                        <p:separator />
+                    </p:submenu>
+
+                    <p:submenu label="Autor" icon="ui-icon-help">
+                        <p:menuitem value="Ver y Editar" outcome="Autor" />
+                    </p:submenu>
+                    <p:submenu label="Categoria" icon="ui-icon-help">
+                        <p:menuitem value="Ver y Editar" outcome="Categorias" />
+                    </p:submenu>
+                    
+                     <p:submenu label="Cliente" icon="ui-icon-help">
+                        <p:menuitem value="Ver y Editar" outcome="Cliente" />
+                    </p:submenu>
+                    <p:submenu label="Devolución" icon="ui-icon-help">
+                        <p:menuitem value="Ver y Editar" outcome="Devoluciones" />
+                    </p:submenu>
+                    
+                       <p:submenu label="Libros" icon="ui-icon-help">
+                        <p:menuitem value="Ver y Editar" outcome="Libros" />
+                    </p:submenu>
+                    
+                    <p:submenu label="Prestar" icon="ui-icon-help">
+                        <p:menuitem value="Ver y Editar" outcome="Prestamos" />
+                                            </p:submenu>
+                      <p:submenu label="Tipo" icon="ui-icon-help">
+                        <p:menuitem value="Ver y Editar" outcome="Tipo" />
+                    </p:submenu>
+
+                    
+                </p:menubar>
+
+            </h:form>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom"></ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

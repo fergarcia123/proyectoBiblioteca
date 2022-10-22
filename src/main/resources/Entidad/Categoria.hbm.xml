@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 20/10/2022 16:46:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Entidad.Categoria" table="categoria" catalog="biblioteca" optimistic-lock="version">
+        <id name="idCategoria" type="java.lang.Integer">
+            <column name="id_categoria" />
+            <generator class="identity" />
+        </id>
+        <property name="categoria" type="string">
+            <column name="categoria" not-null="true" />
+        </property>
+        <property name="estado" type="int">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="libros" table="libro" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_categoria" not-null="true" />
+            </key>
+            <one-to-many class="Entidad.Libro" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Tabla Devolucioness</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="Menu.xhtml">
+<ui:define name="content">
+
+        <h:form>
+
+            <p:commandButton value="Agregar Devoluciones" actionListener="#{devolucionControl.eliminarDevoluciones()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+
+        <h:form id="formListado" style="background: appworkspace;">
+            <p:dataTable  id="tablaDevolucioness" paginator="true" paginatorPosition="bottom" rows="10" var="devolucion" value="#{devolucionControl.listaDevoluciones}" emptyMessage="No existen clientes">
+                <p:column headerText="ID devolucion">
+                    <h:outputText value="#{devolucion.idDevolucion}" />
+                </p:column>
+                <p:column headerText="Libro">
+                    <h:outputText value="#{devolucion.tituloLibro}" />
+                </p:column>
+                <p:column headerText="ISBN">
+                    <h:outputText value="#{devolucion.isbnLibro}" />
+                </p:column>
+                    <p:column headerText="ID Libro">
+                        <h:outputText value="#{devolucion.idLibro}" />
+                </p:column>
+                  <p:column headerText="Comentario">
+                      <h:outputText value="#{devolucion.devComentario}" />
+                </p:column>
+                    <p:column headerText="ID Cliente">
+                        <h:outputText value="#{devolucion.idCliente}" />
+                </p:column>
+                 <p:column headerText="Nombre Cliente">
+                     <h:outputText value="#{devolucion.nombreCliente}" />
+                </p:column>
+                       <p:column headerText="Apellido Cliente">
+                           <h:outputText value="#{devolucion.apellidoCliente}" />
+                </p:column>
+                    <p:column headerText="DPI">
+                        <h:outputText value="#{devolucion.dpiCliente}" />
+                </p:column>
+                  <p:column headerText="Teléfono">
+                      <h:outputText value="#{devolucion.telefonoCliente}" />
+                </p:column>
+
+                <p:column headerText="MODIFICAR" style="text-align: center;">
+                    <p:commandButton style="background:greenyellow;" icon="ui-icon-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{devolucionControl.devoluciones}" value="#{devolucion}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ELIMINAR" style="text-align: center">
+                    <p:commandButton style="background:red;" icon="ui-icon-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                        <f:setPropertyActionListener target="#{devolucionControl.devoluciones}" value="#{devolucion}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+        <h:form id="formAgregar">
+            <p:dialog id="dlgAgregar" header="Agregar Devoluciones" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto; background: buttonface;">                                
+                    <p:outputLabel value="Devoluciones:"/>
+                    <p:inputText value="#{devolucionControl.devoluciones.idDevolucion}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{devolucionControl.devoluciones.comentario}"/>
+                  
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{devolucionControl.agregarDevoluciones()}" update=":formListado:tablaDevolucioness" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formModificar">
+            <p:dialog id="dlgModificar" header="Modificar Devoluciones" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto;">                                
+                    <p:outputLabel value="Devoluciones:"/>
+                    <p:inputText value="#{devolucionControl.devoluciones.idDevolucion}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{devolucionControl.devoluciones.comentario}"/>
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{devolucionControl.modificarDevoluciones()}" update=":formListado:tablaDevolucioness" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Devoluciones" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{devolucionControl.eliminarDevoluciones()}" update=":formListado:tablaDevolucioness" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+</ui:define>
+        </ui:composition>
+    </h:body>
+</html>

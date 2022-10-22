@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Tabla Tipos</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="Menu.xhtml">
+<ui:define name="content">
+
+
+        <h:form>
+
+            <p:commandButton value="Agregar Tipo" actionListener="#{tipoControl.eliminarTipo()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+
+        <h:form id="formListado" style="background: appworkspace;">
+            <p:dataTable  id="tablaTipos" paginator="true" paginatorPosition="bottom" rows="10" var="tipo" value="#{tipoControl.listaTipo}" emptyMessage="No existen clientes">
+                <p:column headerText="ID tipo">
+                    <h:outputText value="#{tipo.idTipo}" />
+                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{tipo.tipo}" />
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{tipo.estado}" />
+                </p:column>
+
+                <p:column headerText="MODIFICAR" style="text-align: center;">
+                    <p:commandButton style="background:greenyellow;" icon="ui-icon-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{tipoControl.tipo}" value="#{tipo}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ELIMINAR" style="text-align: center">
+                    <p:commandButton style="background:red;" icon="ui-icon-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                        <f:setPropertyActionListener target="#{tipoControl.tipo}" value="#{tipo}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+        <h:form id="formAgregar">
+            <p:dialog id="dlgAgregar" header="Agregar Tipo" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto; background: buttonface;">                                
+                    <p:outputLabel value="Tipo:"/>
+                    <p:inputText value="#{tipoControl.tipo.tipo}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{tipoControl.tipo.estado}"/>
+                  
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{tipoControl.agregarTipo()}" update=":formListado:tablaTipos" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formModificar">
+            <p:dialog id="dlgModificar" header="Modificar Tipo" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto;">                                
+                    <p:outputLabel value="Tipo:"/>
+                    <p:inputText value="#{tipoControl.tipo.tipo}"/>
+                    <p:outputLabel value="Estado:"/>
+                    <p:inputText value="#{tipoControl.tipo.estado}"/>
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{tipoControl.modificarTipo()}" update=":formListado:tablaTipos" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Tipo" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{tipoControl.eliminarTipo()}" update=":formListado:tablaTipos" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+</ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
